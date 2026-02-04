@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Sports Tournament Management</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: #ddd;
+            padding: 8px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Online Sports Tournament Management</h1>
+
+<div class="box">
+    <h3>Add Team</h3>
+    <input type="text" id="teamName" placeholder="Enter Team Name">
+    <button onclick="addTeam()">Add Team</button>
+</div>
+
+<div class="box">
+    <h3>Team List</h3>
+    <ul id="teamList"></ul>
+</div>
+
+<div class="box">
+    <h3>Match Schedule</h3>
+    <button onclick="generateMatches()">Generate Matches</button>
+    <ul id="matchList"></ul>
+</div>
+
+<script>
+    var teams = [];
+
+    function addTeam() {
+        var name = document.getElementById("teamName").value;
+
+        if (name === "") {
+            alert("Please enter team name");
+            return;
+        }
+
+        teams.push(name);
+        document.getElementById("teamName").value = "";
+        showTeams();
+    }
+
+    function showTeams() {
+        var list = document.getElementById("teamList");
+        list.innerHTML = "";
+
+        for (var i = 0; i < teams.length; i++) {
+            var li = document.createElement("li");
+            li.innerText = teams[i];
+            list.appendChild(li);
+        }
+    }
+
+    function generateMatches() {
+        var matchList = document.getElementById("matchList");
+        matchList.innerHTML = "";
+
+        for (var i = 0; i < teams.length; i++) {
+            for (var j = i + 1; j < teams.length; j++) {
+                var li = document.createElement("li");
+                li.innerText = teams[i] + " vs " + teams[j];
+                matchList.appendChild(li);
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
