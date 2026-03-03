@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Sports Tournament Management</title>
+</head>
+
+<body style="margin:0; font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1e3c72, #2a5298); padding:40px;">
+
+<h1 style="text-align:center; color:white; font-size:40px; letter-spacing:2px; text-shadow:2px 2px 10px black;">
+     Online Sports Tournament
+</h1>
+
+<!-- Add Team Card -->
+<div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding:25px; margin:30px auto; width:420px; border-radius:20px; box-shadow:0 8px 32px rgba(0,0,0,0.3); color:white;">
+
+    <h3 style="text-align:center;">Add Team</h3>
+
+    <input type="text" id="teamName" placeholder="Enter Team Name"
+        style="width:100%; padding:12px; margin-top:10px; border-radius:10px; border:none; outline:none; font-size:14px;">
+
+    <button onclick="addTeam()"
+        style="width:100%; padding:12px; margin-top:15px; border:none; border-radius:10px; background: linear-gradient(45deg, #ff512f, #dd2476); color:white; font-size:16px; cursor:pointer; transition:0.3s;">
+        ➕ Add Team
+    </button>
+</div>
+
+<!-- Team List Card -->
+<div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding:25px; margin:30px auto; width:420px; border-radius:20px; box-shadow:0 8px 32px rgba(0,0,0,0.3); color:white;">
+
+    <h3 style="text-align:center;">Registered Teams</h3>
+    <ul id="teamList" style="list-style:none; padding:0;"></ul>
+</div>
+
+<!-- Match Section -->
+<div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding:25px; margin:30px auto; width:420px; border-radius:20px; box-shadow:0 8px 32px rgba(0,0,0,0.3); color:white;">
+
+    <h3 style="text-align:center;">Match Scheduler</h3>
+
+    <input type="date" id="matchDate"
+        style="width:100%; padding:12px; margin-top:10px; border-radius:10px; border:none; outline:none;">
+
+    <input type="time" id="matchTime"
+        style="width:100%; padding:12px; margin-top:10px; border-radius:10px; border:none; outline:none;">
+
+    <button onclick="generateMatches()"
+        style="width:100%; padding:12px; margin-top:15px; border:none; border-radius:10px; background: linear-gradient(45deg, #00c6ff, #0072ff); color:white; font-size:16px; cursor:pointer; transition:0.3s;">
+        ⚡ Generate Matches
+    </button>
+
+    <ul id="matchList" style="list-style:none; padding:0;"></ul>
+</div>
+
+<script>
+    var teams = [];
+
+    function addTeam() {
+        var name = document.getElementById("teamName").value;
+
+        if (name === "") {
+            alert("Please enter team name");
+            return;
+        }
+
+        teams.push(name);
+        document.getElementById("teamName").value = "";
+        showTeams();
+    }
+
+    function deleteTeam(index) {
+        teams.splice(index, 1);
+        showTeams();
+    }
+
+    function showTeams() {
+        var list = document.getElementById("teamList");
+        list.innerHTML = "";
+
+        for (var i = 0; i < teams.length; i++) {
+            var li = document.createElement("li");
+            li.style.background = "linear-gradient(45deg,#ff9a9e,#fad0c4)";
+            li.style.padding = "10px";
+            li.style.marginTop = "10px";
+            li.style.borderRadius = "10px";
+            li.style.color = "black";
+            li.style.fontWeight = "bold";
+
+            li.innerHTML = teams[i] +
+                " <button onclick='deleteTeam(" + i + ")' style='float:right; background:#ff416c; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;'>❌</button>";
+
+            list.appendChild(li);
+        }
+    }
+
+    function generateMatches() {
+        var matchList = document.getElementById("matchList");
+        var date = document.getElementById("matchDate").value;
+        var time = document.getElementById("matchTime").value;
+
+        if (date === "" || time === "") {
+            alert("Please select match date and time");
+            return;
+        }
+
+        matchList.innerHTML = "";
+
+        for (var i = 0; i < teams.length; i++) {
+            for (var j = i + 1; j < teams.length; j++) {
+
+                var li = document.createElement("li");
+                li.style.background = "linear-gradient(45deg,#a1ffce,#faffd1)";
+                li.style.padding = "12px";
+                li.style.marginTop = "10px";
+                li.style.borderRadius = "10px";
+                li.style.color = "black";
+                li.style.fontWeight = "bold";
+
+                li.innerText = "🏏 " + teams[i] + " VS " + teams[j] +
+                               " | 📅 " + date +
+                               " | ⏰ " + time;
+
+                matchList.appendChild(li);
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
